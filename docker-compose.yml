@@ -87,6 +87,19 @@ services:
       KAFKA_REST_BOOTSTRAP_SERVERS: 'broker:29092'
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
 
+  # Tutorial Client
+  tutorial-client:
+    image: "tutorialshell:0.1"
+  #  hostname: tutorialshell
+  #  container_name: tutorialshell
+  #  stdin_open: true
+  #  tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile-TutorialClient
+    networks:
+      - localnet
+
   # MongoDB Replica Set
   mongo1:
     image: "mongo:latest"
