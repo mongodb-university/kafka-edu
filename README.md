@@ -58,7 +58,7 @@ The following is a list of available tutorials:
 | 2- Converters and Transforms   | Coming Soon        | |
 | 3- Selective Replication   | Explore replicating data between MongoDB clusters through Kafka using the ChangeStreamEvent handler        | [Tutorial 3]() |
 | 4- Using Schemas   | Coming Soon        | |
-| 4- Error Handling   | Coming Soon        | |
+| 5- Error Handling   | Coming Soon        | |
 
 ## Shutting down the Tutorial environment
 

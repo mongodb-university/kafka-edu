@@ -1,0 +1,1 @@
+curl -X DELETE connect:8083/connectors/$1
