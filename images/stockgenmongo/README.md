@@ -1,10 +1,14 @@
 # Stock Generation app for MongoDB
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 This application will create sample data -- randomly generated company names, stock symbols, and other information -- and continuously insert it into MongoDB. 
 =======
 This application will randomly create ficticuous company names, stock symbols and sample data.  These data will be perpetually insert data into MongoDB.  
 >>>>>>> 8ab324a (update to support ccloud blog post)
+=======
+This application will create sample data -- randomly generated company names, stock symbols, and other information -- and continuously insert it into MongoDB. 
+>>>>>>> 6fdd443 (Update images/stockgenmongo/README.md)
 
 To start generating data into the local MongoDB cluster that is created with the Kafka tutorial, launch the following commmand:
 
@@ -26,6 +30,9 @@ The Docker container launches a python application called, "stockgen.py".  This 
 The company names are generated from reading three text files, adjectives.txt, nouns.text and endings.txt.  You can modify these files to generate more unique names.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 8ab324a (update to support ccloud blog post)
+=======
+>>>>>>> 6fdd443 (Update images/stockgenmongo/README.md)
