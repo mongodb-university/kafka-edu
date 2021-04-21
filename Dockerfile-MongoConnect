@@ -7,3 +7,5 @@ FROM confluentinc/cp-kafka-connect:latest
 RUN confluent-hub install --no-prompt mongodb/kafka-connect-mongodb:latest
 
 ENV CONNECT_PLUGIN_PATH="/usr/share/java,/usr/share/confluent-hub-components"
+
+RUN echo -e "91.2\n60.3\n79.8" > ~/Tutorial2-sensor-readings.txt
