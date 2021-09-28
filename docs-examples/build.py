@@ -3,7 +3,7 @@ import shutil
 
 REPLACE_CONSTANT="MONGODB_KAFKA_CONNECTOR_VERSION"
 SRC_DIR = "source"
-BUILD_DIR = "built_examples"
+BUILD_DIR = "examples"
 # v1.3 not included in replace map as v1.3 does not include CDC Handler
 # replace map was constructed from: https://www.confluent.io/hub/mongodb/kafka-connect-mongodb 
 REPLACE_MAP = {
@@ -28,7 +28,7 @@ def copyThenReplace(src, dst, replace):
     findReplace(dst, REPLACE_CONSTANT, replace, "[Dd]ocker*")
 
 try:
-    shutil.rmtree(os.path.join(BUILD_DIR))
+    shutil.rmtree(os.path.abspath(BUILD_DIR))
 except FileNotFoundError:
     pass
 
