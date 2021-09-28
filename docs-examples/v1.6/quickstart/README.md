@@ -1,6 +1,7 @@
-# MongoDB Kafka Connector Lite
+# Quick Start
 
-This docker compose starts the following services:
+This is the MongoDB Kafka Connector quick start. The quick start contains a docker
+environment with the following services:
 
 - MongoDB single node replica set
 - Kafka Connect
