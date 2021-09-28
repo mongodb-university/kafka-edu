@@ -13,25 +13,25 @@ Perform the following actions to install MongoDB Kafka Connector source and sink
 
 1. Start the docker environment by running the following command:
 
-    docker-compose up -d
+       docker-compose up -d
 
 2. Enter the a shell in the docker environment with the following command:
 
-    docker exec -it shell /bin/bash
+       docker exec -it shell /bin/bash
 
 3. Install connectors by running the following commands:
 
-    curl -X POST -H "Content-Type: application/json" --data @source-connector.json http://connect:8083/connectors -w "\n"
-    curl -X POST -H "Content-Type: application/json" --data @sink-connector-cdc.json http://connect:8083/connectors -w "\n"
+       curl -X POST -H "Content-Type: application/json" --data @source-connector.json http://connect:8083/connectors -w "\n"
+       curl -X POST -H "Content-Type: application/json" --data @sink-connector-cdc.json http://connect:8083/connectors -w "\n"
 
 4. Enter the MongoDB shell with the following command:
 
-    mongosh mongodb://mongo1:27017/?replicaSet=rs0
+       mongosh mongodb://mongo1:27017/?replicaSet=rs0
 
 5. Upload a document to the `source` collection in the `quickstart` database:
 
-    use quickstart
-    db.source.insertOne({"hello":"kafka"})
+       use quickstart
+       db.source.insertOne({"hello":"kafka"})
 
 6. Wait 5-10 seconds and run the following command:
 
@@ -39,7 +39,7 @@ Perform the following actions to install MongoDB Kafka Connector source and sink
 
    You should see a document resembling the following:
 
-    {"_id":{"$oid":"<your id value>"},"hello": "kafka"}
+   `{"_id":{"$oid":"<your id value>"},"hello": "kafka"}`
 
 To stop the process, exit the docker environment and run the following command:
     
