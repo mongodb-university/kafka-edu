@@ -1,3 +1,3 @@
-db = db.getSiblingDB("quickstart")
-db.createCollection("source")
-db.createCollection("sink")
+db = db.getSiblingDB("quickstart");
+db.createCollection("source");
+db.createCollection("sink");
