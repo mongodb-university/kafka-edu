@@ -3,7 +3,7 @@ import shutil
 
 REPLACE_CONSTANT="MONGODB_KAFKA_CONNECTOR_VERSION"
 SRC_DIR = "source"
-BUILD_DIR = "build"
+BUILD_DIR = "built_examples"
 # v1.3 not included in replace map as v1.3 does not include CDC Handler
 REPLACE_MAP = {
     "v1.6": "1.6.1",
