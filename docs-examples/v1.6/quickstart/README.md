@@ -5,8 +5,15 @@ environment with the following services:
 
 - MongoDB single node replica set
 - Kafka Connect
-- Kafka Broker
-- Kafka Zookeeper
+- Apache Kafka
+- Zookeeper (Dependency of Apache Kafka)
+
+The docker environment contains a sample pipeline. The following diagram shows the architecture of
+the sample pipeline. The solid lines represent connections between tools that you receive
+pre-configured. The dotted lines represent connections you will add in the following sections of
+this guide. The numbers, from lowest to highest, show the path of a message through the pipeline:
+
+![Sample Pipeline in Docker Environment](./mongo-kafka-connect.png "Architecture")
 
 ## Usage
 
@@ -14,7 +21,7 @@ Perform the following actions to install MongoDB Kafka Connector source and sink
 
 1. Start the docker environment by running the following command:
 
-       docker-compose up -d
+       docker-compose -p quickstart up -d
 
 2. Enter the a shell in the docker environment with the following command:
 
@@ -22,8 +29,36 @@ Perform the following actions to install MongoDB Kafka Connector source and sink
 
 3. Install connectors by running the following commands:
 
-       curl -X POST -H "Content-Type: application/json" --data @source-connector.json http://connect:8083/connectors -w "\n"
-       curl -X POST -H "Content-Type: application/json" --data @sink-connector-cdc.json http://connect:8083/connectors -w "\n"
+       curl -X POST \
+            -H "Content-Type: application/json" \
+            --data '
+            {"name": "mongo-source",
+             "config": {
+                "connector.class":"com.mongodb.kafka.connect.MongoSourceConnector",
+                "connection.uri":"mongodb://mongo1:27017/?replicaSet=rs0",
+                "database":"quickstart",
+                "collection":"source",
+                "pipeline":"[{\"$match\": {\"operationType\": \"insert\"}}, {$addFields : {\"fullDocument.travel\":\"I went through Kafka!\"}}]"
+                }
+            }
+            ' \
+            http://connect:8083/connectors -w "\n"
+       
+       curl -X POST \
+            -H "Content-Type: application/json" \
+            --data '
+            {"name": "mongo-sink",
+             "config": {
+                "connector.class":"com.mongodb.kafka.connect.MongoSinkConnector",
+                "connection.uri":"mongodb://mongo1:27017/?replicaSet=rs0",
+                "database":"quickstart",
+                "collection":"sink",
+                "topics":"quickstart.source",
+                "change.data.capture.handler": "com.mongodb.kafka.connect.sink.cdc.mongodb.ChangeStreamHandler"
+                }
+            }
+            ' \
+            http://connect:8083/connectors -w "\n"
 
 4. Enter the MongoDB shell with the following command:
 
