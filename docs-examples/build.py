@@ -5,6 +5,7 @@ REPLACE_CONSTANT="MONGODB_KAFKA_CONNECTOR_VERSION"
 SRC_DIR = "source"
 BUILD_DIR = "built_examples"
 # v1.3 not included in replace map as v1.3 does not include CDC Handler
+# replace map was constructed from: https://www.confluent.io/hub/mongodb/kafka-connect-mongodb 
 REPLACE_MAP = {
     "v1.6": "1.6.1",
     "v1.5": "1.5.1",
