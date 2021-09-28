@@ -1,1 +1,1 @@
-TODO: Link to Quickstart
+Source code for MongoDB Kafka Connector Quickstart.
