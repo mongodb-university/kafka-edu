@@ -2,8 +2,8 @@ import os, fnmatch
 import shutil
 
 REPLACE_CONSTANT="MONGODB_KAFKA_CONNECTOR_VERSION"
-SRC_DIR = "source"
-BUILD_DIR = "examples"
+SRC_DIR = "../source"
+BUILD_DIR = "../examples"
 # v1.3 not included in replace map as v1.3 does not include CDC Handler
 # replace map was constructed from: https://www.confluent.io/hub/mongodb/kafka-connect-mongodb 
 REPLACE_MAP = {

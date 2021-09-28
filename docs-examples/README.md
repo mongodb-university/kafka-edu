@@ -4,7 +4,7 @@ Edit the files in the `source` directory. Do not edit files in the `examples` di
 from the `source` directory.
 
 To build the `examples` directory, run the following commands from within the
-`docs-examples` directory:
+`docs-examples/scripts` directory:
 
     pip install pipenv
 
