@@ -4,8 +4,7 @@ Example of writing a custom write strategy
 
 ./gradlew clean build
 
-Then copy the `mongo-kafka-customization/build/libs/UpsertAsPartOfDocumentStrategy.jar`
-
+Then copy the `./build/libs/UpsertAsPartOfDocumentStrategy.jar`
 
 ## Customization
 
