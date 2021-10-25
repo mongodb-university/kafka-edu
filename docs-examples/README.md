@@ -8,6 +8,4 @@ To build the `examples` directory, run the following commands from within the
 
     pip install pipenv
 
-    pipenv shell
-
-    python build.py
+    pipenv run python build.py
