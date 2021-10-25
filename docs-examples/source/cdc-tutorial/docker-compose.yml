@@ -31,7 +31,7 @@ services:
       KAFKA_DELETE_TOPIC_ENABLE: "true"
 
   connect:
-    image: quickstart-connect-MONGODB_KAFKA_CONNECTOR_VERSION:1.0
+    image: cdc-tutorial-connect-MONGODB_KAFKA_CONNECTOR_VERSION:1.0
     build:
       context: .
       dockerfile: Dockerfile-MongoConnect
@@ -61,7 +61,7 @@ services:
       CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
 
   mongo1:
-    image: "quickstart-mongod:1.0"
+    image: "cdc-tutorial-mongod:1.0"
     container_name: mongo1
     build:
       context: .
@@ -72,7 +72,7 @@ services:
     restart: always
 
   mongo1-setup:
-    image: "quickstart-mongod:1.0"
+    image: "cdc-tutorial-mongod:1.0"
     container_name: mongo1-setup
     depends_on:
       - mongo1
@@ -87,7 +87,7 @@ services:
     restart: "no"
 
   shell:
-    image: "quickstart-shell:1.0"
+    image: "cdc-tutorial-shell:1.0"
     container_name: shell
     build:
       context: .
