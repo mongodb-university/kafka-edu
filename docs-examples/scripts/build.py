@@ -1,4 +1,4 @@
-'''Script to build versioned MongoDB Kafka Connector examples'''
+'''Script to build versioned MongoDB Kafka Connector examples.'''
 
 import os
 import fnmatch
@@ -17,7 +17,8 @@ IS_SUPPORTED = "is_supported"
 CONFLUENT_VERSION = "confluent_hub_version"
 
 # v1.3-v1.0 are not supported because v1.4 introduces CDC Handlers
-# replace map constructed from: https://www.confluent.io/hub/mongodb/kafka-connect-mongodb
+# The following dictionary captures connector version information from this website:
+# https://www.confluent.io/hub/mongodb/kafka-connect-mongodb
 REPLACE_MAP = {
     "v1.6": {IS_SUPPORTED:True, CONFLUENT_VERSION:"1.6.1"},
     "v1.5": {IS_SUPPORTED:True, CONFLUENT_VERSION:"1.5.1"},
@@ -29,7 +30,7 @@ REPLACE_MAP = {
 }
 
 def recursively_find_replace(directory, find, replace, file_pattern):
-    '''Recursively find a string in a directory'''
+    '''Recursively find and replace a string in a directory.'''
     for path, _, files in os.walk(os.path.abspath(directory)):
         for filename in fnmatch.filter(files, file_pattern):
             filepath = os.path.join(path, filename)
@@ -40,17 +41,17 @@ def recursively_find_replace(directory, find, replace, file_pattern):
                 f_2.write(file_contents)
 
 def copy_replace_pipeline_source(dst, replace):
-    '''copy and replace pipeline source code'''
+    '''Copy pipeline source and replace a string constant.'''
     shutil.copytree(ABS_SRC, dst)
     recursively_find_replace(dst, REPLACE_CONSTANT, replace, SOURCE_REPLACE_REGEX)
 
 def copy_replace_unsupported_dir(dst, replace):
-    '''copy and replace unsupported template'''
+    '''Copy unsupported template and replace a string constant.'''
     shutil.copytree(ABS_UNSUPPORTED, dst)
     recursively_find_replace(dst, REPLACE_CONSTANT, replace, UNSUPPORTED_REPLACE_REGEX)
 
 def generate_tutorials():
-    '''generate docs examples and READMEs for unsupported files'''
+    '''Generate docs examples and READMEs for unsupported versions of the connector.'''
     try:
         shutil.rmtree(os.path.abspath(BUILD_DIR))
     except FileNotFoundError:
