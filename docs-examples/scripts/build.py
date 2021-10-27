@@ -20,13 +20,13 @@ CONFLUENT_VERSION = "confluent_hub_version"
 # The following dictionary captures connector version information from this website:
 # https://www.confluent.io/hub/mongodb/kafka-connect-mongodb
 REPLACE_MAP = {
-    "v1.6": {IS_SUPPORTED:True, CONFLUENT_VERSION:"1.6.1"},
-    "v1.5": {IS_SUPPORTED:True, CONFLUENT_VERSION:"1.5.1"},
-    "v1.4": {IS_SUPPORTED:True, CONFLUENT_VERSION:"1.4.0"},
-    "v1.3": {IS_SUPPORTED:False, CONFLUENT_VERSION:"1.3.0"},
-    "v1.2": {IS_SUPPORTED:False, CONFLUENT_VERSION:"1.2.0"},
-    "v1.1": {IS_SUPPORTED:False, CONFLUENT_VERSION:"1.1.0"},
-    "v1.0": {IS_SUPPORTED:False, CONFLUENT_VERSION:None}
+    "v1.6": "1.6.1",
+    "v1.5": "1.5.1",
+    "v1.4": "1.4.0",
+    "v1.3": None,
+    "v1.2": None,
+    "v1.1": None,
+    "v1.0": None
 }
 
 def recursively_find_replace(directory, find, replace, file_pattern):
@@ -41,12 +41,12 @@ def recursively_find_replace(directory, find, replace, file_pattern):
                 output_file.write(file_contents)
 
 def copy_replace_pipeline_source(dst, replace):
-    '''Copy pipeline source and replace a string constant.'''
+    '''Copy source directory and replace all occurrences of a string constant with kafka version.'''
     shutil.copytree(SRC_DIR, dst)
     recursively_find_replace(dst, REPLACE_CONSTANT, replace, DOCKER_UNIX_PATTERN)
 
 def copy_replace_unsupported_dir(dst, replace):
-    '''Copy unsupported template and replace a string constant.'''
+    '''Copy unsupported template and replace all occurrences of a string constant with kafka version.'''
     shutil.copytree(UNSUPPORTED_DIR, dst)
     recursively_find_replace(dst, REPLACE_CONSTANT, replace, README_UNIX_PATTERN)
 
@@ -56,10 +56,10 @@ def generate_tutorials():
         shutil.rmtree(os.path.abspath(RELATIVE_BUILD_DIR))
     except FileNotFoundError:
         pass
-    for connector_version, support_dict in REPLACE_MAP.items():
+    for connector_version, confluent_version in REPLACE_MAP.items():
         abs_dst = os.path.abspath(os.path.join(RELATIVE_BUILD_DIR, connector_version))
-        if support_dict[IS_SUPPORTED]:
-            copy_replace_pipeline_source(abs_dst, support_dict[CONFLUENT_VERSION])
+        if confluent_version:
+            copy_replace_pipeline_source(abs_dst, confluent_version)
         else:
             copy_replace_unsupported_dir(abs_dst, connector_version)
 
