@@ -11,6 +11,7 @@ curl --connect-timeout 5 \
     "connection.uri":"mongodb://mongo1:27017,mongo2:27017,mongo3:27017",
     "database":"CDCTutorial","collection":"Source"}
 }' http://connect:8083/connectors -w "\n"
-# checking this topic triggers a leader election. This is a temporary fix.
-# <TODO: Figure out a better way to trigger election and fix Broker: Leader not available error>
+# As this topic does not exist when this script runs, the following command
+# triggers a leader election for the topic. The subsequent run of this command
+# by the reader watches the topic.
 kafkacat -b broker:29092 -C -t CDCTutorial.Source
