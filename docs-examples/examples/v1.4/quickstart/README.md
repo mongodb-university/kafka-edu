@@ -1,7 +1,6 @@
 # Quick Start
 
-This directory contains the files that define the sandbox for the MongoDB Kafka
-Connector quick start. These files correspond to the quick start for
-v1.4 of the connector.
+This directory contains files you need to build the MongoDB Kafka Connector Quick Start
+for v1.4 of the connector.
 
 [You can view the quick start here](https://docs.mongodb.com/kafka-connector/v1.4/quick-start/).
