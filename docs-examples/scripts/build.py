@@ -5,6 +5,7 @@ import fnmatch
 import shutil
 
 REPLACE_CONSTANT="MONGODB_KAFKA_CONNECTOR_VERSION"
+REPLACE_CONSTANT_ALT="MONGODB_KAFKA_CONNECTOR_VERSION_ALT"
 RELATIVE_SRC_DIR = "../source"
 RELATIVE_BUILD_DIR = "../examples"
 RELATIVE_UNSUPPORTED_DIR = "../unsupported"
@@ -40,10 +41,11 @@ def recursively_find_replace(directory, find, replace, file_pattern):
             with open(filepath, "w", encoding="UTF-8") as output_file:
                 output_file.write(file_contents)
 
-def copy_replace_pipeline_source(dst, replace):
+def copy_replace_pipeline_source(dst, replace_confluent, replace_connector):
     '''Copy source directory and replace all occurrences of a string constant with kafka version.'''
     shutil.copytree(SRC_DIR, dst)
-    recursively_find_replace(dst, REPLACE_CONSTANT, replace, DOCKER_UNIX_PATTERN)
+    recursively_find_replace(dst, REPLACE_CONSTANT, replace_confluent, DOCKER_UNIX_PATTERN)
+    recursively_find_replace(dst, REPLACE_CONSTANT_ALT, replace_connector, README_UNIX_PATTERN)
 
 def copy_replace_unsupported_dir(dst, replace):
     '''Copy unsupported template and replace all occurrences of a string constant with kafka version.'''
@@ -59,7 +61,7 @@ def generate_tutorials():
     for connector_version, confluent_version in REPLACE_MAP.items():
         abs_dst = os.path.abspath(os.path.join(RELATIVE_BUILD_DIR, connector_version))
         if confluent_version:
-            copy_replace_pipeline_source(abs_dst, confluent_version)
+            copy_replace_pipeline_source(abs_dst, confluent_version, connector_version)
         else:
             copy_replace_unsupported_dir(abs_dst, connector_version)
 

@@ -1,1 +1,6 @@
-TODO: Link to docs page once it is published
+# Replicate Data with a Change Data Capture Handler Tutorial
+
+This directory contains files you need to build the MongoDB Kafka Connector
+"Replicate Data with a Change Data Capture Handler" Tutorial for v1.6 of the connector.
+
+[You can view the tutorial here](https://docs.mongodb.com/kafka-connector/v1.6/tutorials/replicate-with-cdc/).
