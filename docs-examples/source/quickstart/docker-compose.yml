@@ -74,6 +74,9 @@ services:
   mongo1-setup:
     image: "quickstart-mongod:1.0"
     container_name: mongo1-setup
+    build:
+      context: .
+      dockerfile: Dockerfile-Mongo
     depends_on:
       - mongo1
     networks:
