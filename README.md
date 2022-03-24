@@ -17,7 +17,7 @@ The tutorials use the following client applications:
 - [jq](https://stedolan.github.io/jq/download/)
 - [KafkaCat](https://github.com/edenhill/kafkacat)
 - [Docker](https://docs.docker.com/get-docker/)
-- [Mongosh](https://docs.mongodb.com/mongodb-shell/install/)
+- [Mongosh](https://www.mongodb.com/docs/mongodb-shell/install/)
 
 You can install them locally first before starting tutorials.  Alternatively, there is a Docker image, "tutoralshell" that will be created and available once you start the environment.  This image contains all the tools installed in an Ubuntu image.
 
@@ -75,6 +75,6 @@ To start the environment again just execute the `run.sh` shell script
 
 ## References
 
-- [MongoDB Kafka Connector](https://docs.mongodb.com/kafka-connector/current/) online documentation.
+- [MongoDB Kafka Connector](https://www.mongodb.com/docs/kafka-connector/current/) online documentation.
 - [Connectors to Kafka](https://docs.confluent.io/home/connect/overview.html)
 
