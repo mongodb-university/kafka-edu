@@ -21,12 +21,12 @@ The MongoDB Connector for Apache Kafka is an [open source connector](https://git
 This installation occurred in our tutorial setup as part of our Docker build of the kafka-connect image, specifically within the `Dockerfile-MongoConnect` file.
 
 For a complete description of installation of connectors in Kafka Connect see the [Confluent documentation](https://docs.confluent.io/home/connect/userguide.html#installing-kconnect-plugins). 
-Once connectors are installed they are configured by passing configuration properties to Kafka Connect. The Kafka Connect platform includes a number of [Source Configuration](https://docs.confluent.io/platform/6.0.1/installation/configuration/connect/source-connect-configs.html) properties that apply to all connectors.  These properties include things like name, the connector class to use and the maximum number of tasks.  Each connector builds upon this list of configuration properties and adds their own connector specific properties.  For example, the MongoDB source connector exposes the `copy.existing` parameter that tells the connector to copy existing data from source collections and convert them to Change Stream events before processing any current events.  A complete list of these configuration parameters for the Source and Sink can be found in the [MongoDB Connector online documentation](https://docs.mongodb.com/kafka-connector/current/).  
+Once connectors are installed they are configured by passing configuration properties to Kafka Connect. The Kafka Connect platform includes a number of [Source Configuration](https://docs.confluent.io/platform/6.0.1/installation/configuration/connect/source-connect-configs.html) properties that apply to all connectors.  These properties include things like name, the connector class to use and the maximum number of tasks.  Each connector builds upon this list of configuration properties and adds their own connector specific properties.  For example, the MongoDB source connector exposes the `copy.existing` parameter that tells the connector to copy existing data from source collections and convert them to Change Stream events before processing any current events.  A complete list of these configuration parameters for the Source and Sink can be found in the [MongoDB Connector online documentation](https://www.mongodb.com/docs/kafka-connector/current/).  
  In this tutorial we will use the `curl` command to configure the connector by passing a configuration via the REST API.  Later in this tutorial we will cover how to use MongoDB as a source and sink in more detail.  Before diving into the connector specifics, it is important to learn about one of the key technologies within MongoDB that enables the source connector, Change Streams.
 
 ## Part 2- Exploring MongoDB Change Streams
 
-When used as a source connector, a connection is made to MongoDB and a Change Stream is created on the specified namespace that is defined in the connector configuration.  [Change streams](https://docs.mongodb.com/manual/changeStreams/) is a feature within MongoDB server and exists not just for the Kafka Connector but as a way for any client or application to subscribe to real-time data changes within the database for a single collection, a database or an entire deployment. 
+When used as a source connector, a connection is made to MongoDB and a Change Stream is created on the specified namespace that is defined in the connector configuration.  [Change streams](https://www.mongodb.com/docs/manual/changeStreams/) is a feature within MongoDB server and exists not just for the Kafka Connector but as a way for any client or application to subscribe to real-time data changes within the database for a single collection, a database or an entire deployment. 
 
 To see how this works let’s open a command or terminal window and create a connection to our TutorialShell container as follows:
 
@@ -63,7 +63,7 @@ db.orders.insertOne({“orderid”:1,”product”:”pizza”, “price”:50})
 
 ### Step 2.3: Observe event data
 
-Notice on **Shell 1** that the change stream event has arrived and contains a lot of data.  A complete description of events is available in the [Change Stream MongoDB documentation](https://docs.mongodb.com/manual/reference/change-events/).  There are a few data points that are worth pointing out.  
+Notice on **Shell 1** that the change stream event has arrived and contains a lot of data.  A complete description of events is available in the [Change Stream MongoDB documentation](https://www.mongodb.com/docs/manual/reference/change-events/).  There are a few data points that are worth pointing out.  
 
 **Resume Token: _id**
 
@@ -219,7 +219,7 @@ Recall when we issued the curl statement we passed this source configuration:
 }}
 ```
 
-> Note: This configuration provides the minimum information needed to configure the source connector.  In addition to these properties there are many options available for you to use to change the behavior of the source connector and to support various use cases.  In this tutorial we will cover just a few of these options, however, for a complete list check out the [MongoDB Kafka Connector Source](https://docs.mongodb.com/kafka-connector/current/kafka-source/) documentation.
+> Note: This configuration provides the minimum information needed to configure the source connector.  In addition to these properties there are many options available for you to use to change the behavior of the source connector and to support various use cases.  In this tutorial we will cover just a few of these options, however, for a complete list check out the [MongoDB Kafka Connector Source](https://www.mongodb.com/docs/kafka-connector/current/kafka-source/) documentation.
 
 Recall that our “value” part of the kafka message includes a “payload” field.  This field has as its value the change stream event that was generated from our MongoDB source. 
 
@@ -395,7 +395,7 @@ Application owners that are consuming the data from the Kafka topic complain tha
 Finished?  Check out the solution to the challenge  (links to a separate .md file)
 
 If you are having trouble, read up on these configuration parameters
-[Custom Pipeline](https://docs.mongodb.com/kafka-connector/current/kafka-source/#custom-pipeline-example)
-[Topic naming example](https://docs.mongodb.com/kafka-connector/current/kafka-source/#topic-naming-example)
+[Custom Pipeline](https://www.mongodb.com/docs/kafka-connector/current/kafka-source/#custom-pipeline-example)
+[Topic naming example](https://www.mongodb.com/docs/kafka-connector/current/kafka-source/#topic-naming-example)
 
 **Comments or feedback on this tutorial?  Please post them on the [Connectors community forum](https://developer.mongodb.com/community/forums/c/connectors-integrations/48). **
