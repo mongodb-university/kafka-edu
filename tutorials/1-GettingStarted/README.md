@@ -398,4 +398,4 @@ If you are having trouble, read up on these configuration parameters
 [Custom Pipeline](https://www.mongodb.com/docs/kafka-connector/current/kafka-source/#custom-pipeline-example)
 [Topic naming example](https://www.mongodb.com/docs/kafka-connector/current/kafka-source/#topic-naming-example)
 
-**Comments or feedback on this tutorial?  Please post them on the [Connectors community forum](https://developer.mongodb.com/community/forums/c/connectors-integrations/48). **
+**Comments or feedback on this tutorial?  Please post them on the [Connectors community forum](https://www.mongodb.com/community/forums/c/data/connectors-integrations/48).**
