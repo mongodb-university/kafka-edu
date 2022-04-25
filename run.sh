@@ -12,46 +12,14 @@ echo "Starting docker ."
 docker-compose up -d --build
 
 sleep 5
-echo "\n\nWaiting for the systems to be ready.."
-function test_systems_available {
-  COUNTER=0
-  until $(curl --output /dev/null --silent --head --fail http://localhost:$1); do
-      printf '.'
-      sleep 2
-      let COUNTER+=1
-      if [[ $COUNTER -gt 30 ]]; then
-        MSG="\nWARNING: Could not reach configured kafka system on http://localhost:$1 \nNote: This script requires curl.\n"
 
-          if [[ "$OSTYPE" == "darwin"* ]]; then
-            MSG+="\nIf using OSX please try reconfiguring Docker and increasing RAM and CPU. Then restart and try again.\n\n"
-          fi
+echo "\nConfiguring the MongoDB ReplicaSet...\n"
+# 5.0 and above we can use mongosh
+#docker-compose exec mongo1 /usr/bin/mongosh --eval '''rsconf = { _id : "rs0", members: [ { _id : 0, host : "mongo1:27017", priority: 1.0 }]};
+#rs.initiate(rsconf);'''
 
-        echo -e $MSG
-        exit 1
-      fi
-  done
-}
-
-test_systems_available 8082
-test_systems_available 8083
-
-
-#trap clean_up EXIT
-
-echo -e "\nConfiguring the MongoDB ReplicaSet.\n"
-docker-compose exec mongo1 /usr/bin/mongo --eval '''if (rs.status()["ok"] == 0) {
-    rsconf = {
-      _id : "rs0",
-      members: [
-        { _id : 0, host : "mongo1:27017", priority: 1.0 },
-        { _id : 1, host : "mongo2:27017", priority: 0.5 },
-        { _id : 2, host : "mongo3:27017", priority: 0.5 }
-      ]
-    };
-    rs.initiate(rsconf);
-}
-
-rs.conf();'''
+docker-compose exec mongo1 /usr/bin/mongo --eval '''rsconf = { _id : "rs0", members: [ { _id : 0, host : "mongo1:27017", priority: 1.0 }]};
+rs.initiate(rsconf);'''
 
 sleep 5
 echo "\n\nKafka Connectors status:\n\n"
@@ -68,7 +36,7 @@ echo '''
 
 The following services are running:
 
-MongoDB 3-node cluster available on port 27017, 27018 27019
+MongoDB 3-node cluster available on port 27017
 Kafka Broker on 9092
 Kafka Zookeeper on 2181
 Kafka Connect on 8083
@@ -82,8 +50,8 @@ docker-compose-down
 To stop and remove the MongoDB database volumes:
 docker-compose-down -v
 
-(Optional) an image has been created that includes all the client tools such as MongoShell, KafkaCat, etc:
-docker run --rm --name shell1 --network kafka-edu_localnet -it tutorialshell:0.1 bash
+(Optional) A docker image is avaialble which includes MongoSH shell, KafkaCat, and various utilitiies:
+docker run --rm --name shell1 --network kafka-edu_localnet -it robwma/mongokafkatutorial:latest bash
 
 ==============================================================================================================
 '''
