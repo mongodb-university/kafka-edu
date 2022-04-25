@@ -1,8 +1,8 @@
 version: '3.6'
 services:
-      
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
+    platform: linux/amd64
     hostname: zookeeper
     container_name: zookeeper
     ports:
@@ -14,7 +14,8 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
 
   broker:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:latest #7.1.0
+    platform: linux/amd64
     hostname: broker
     container_name: broker
     depends_on:
@@ -37,7 +38,8 @@ services:
       KAFKA_DELETE_TOPIC_ENABLE: "true" 
 
   connect:
-    image: confluentinc/cp-kafka-connect-base:latest
+    image: confluentinc/cp-kafka-connect-base:latest # 7.1.0
+    platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile-MongoConnect
@@ -72,10 +74,12 @@ services:
 
 
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:latest
+    image: confluentinc/cp-kafka-rest:7.1.0
+    platform: linux/amd64
     depends_on:
       - zookeeper
       - broker
+      - schema-registry
     ports:
       - 8082:8082
     hostname: rest-proxy
@@ -87,22 +91,26 @@ services:
       KAFKA_REST_BOOTSTRAP_SERVERS: 'broker:29092'
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
 
-  # Tutorial Client
-  tutorial-client:
-    image: "tutorialshell:0.1"
-  #  hostname: tutorialshell
-  #  container_name: tutorialshell
-  #  stdin_open: true
-  #  tty: true
-    build:
-      context: .
-      dockerfile: Dockerfile-TutorialClient
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.1.0
+    hostname: schema-registry
+    container_name: schema-registry
+    platform: linux/amd64
+    depends_on:
+      - broker
     networks:
       - localnet
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
 
   # MongoDB Replica Set
   mongo1:
-    image: "mongo:latest"
+    image: "mongo:4.4.13" # if using non-M1 mac, you can use 5.0.7
+    platform: linux/amd64
     container_name: mongo1
     command: --replSet rs0 --oplogSize 128
     volumes:
@@ -112,28 +120,6 @@ services:
     ports:
       - "27017:27017"
     restart: always
-  mongo2:
-    image: "mongo:latest"
-    container_name: mongo2
-    command: --replSet rs0 --oplogSize 128
-    volumes:
-      - rs2:/data/db
-    networks:
-      - localnet
-    ports:
-      - "27018:27017"
-    restart: always
-  mongo3:
-    image: "mongo:latest"
-    container_name: mongo3
-    command: --replSet rs0 --oplogSize 128
-    volumes:
-      - rs3:/data/db
-    networks:
-      - localnet
-    ports:
-      - "27019:27017"
-    restart: always
 
 networks:
   localnet:
@@ -141,5 +127,4 @@ networks:
 
 volumes:
   rs1:
-  rs2:
-  rs3:
+
