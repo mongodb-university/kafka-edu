@@ -16,4 +16,4 @@ curl --silent http://localhost:8083/connector-plugins | jq -c '.[] | select( .cl
 
 
 echo "\n\nMongoDB:\n"
-docker-compose exec mongo1 /usr/bin/mongo localhost:27017 --eval "db.version()"
+# docker-compose exec mongo1 /usr/bin/mongosh localhost:27017 --eval "db.version()"
