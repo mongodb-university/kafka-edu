@@ -1,13 +1,8 @@
 FROM confluentinc/cp-kafka-connect:latest
 
-#If you want to run a private build uncomment the COPY command and make sure the JAR file is in the directory path
+#If you want to run a local build of the connector, uncomment the COPY command and make sure the JAR file is in the directory path
 #COPY mongo-kafka-connect-<<INSERT BUILD HERE>>3-all.jar /usr/share/confluent-hub-components
 
-#COPY mongo-0204.jar /usr/share/confluent-hub-components
-
-# If you want to run the latest production release of the connector make sure the following is not commented:
 RUN confluent-hub install --no-prompt mongodb/kafka-connect-mongodb:latest
 
 ENV CONNECT_PLUGIN_PATH="/usr/share/java,/usr/share/confluent-hub-components"
-
-RUN echo -e "91.2\n60.3\n79.8" > ~/Tutorial2-sensor-readings.txt
