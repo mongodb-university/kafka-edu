@@ -14,6 +14,3 @@ curl --silent -X GET http://localhost:8083/connectors | jq
 echo "\n\nVersion of MongoDB Connector for Apache Kafka installed:\n"
 curl --silent http://localhost:8083/connector-plugins | jq -c '.[] | select( .class == "com.mongodb.kafka.connect.MongoSourceConnector" or .class == "com.mongodb.kafka.connect.MongoSinkConnector" )'
 
-
-echo "\n\nMongoDB:\n"
-# docker-compose exec mongo1 /usr/bin/mongosh localhost:27017 --eval "db.version()"
