@@ -42,7 +42,7 @@ Kafka Zookeeper on 2181
 Kafka Connect on 8083
 
 Status of kafka connectors:
-sh status.h
+sh status.sh
 
 To stop these serivces:
 docker-compose-down
