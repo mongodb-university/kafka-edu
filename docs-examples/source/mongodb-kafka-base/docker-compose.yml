@@ -1,8 +1,8 @@
 version: '3.6'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    platform: linux/amd64
+    image: confluentinc/cp-zookeeper:7.1.1 #latest
+    platform: ${PLATFORM}
     hostname: zookeeper
     container_name: zookeeper
     ports:
@@ -14,8 +14,8 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
 
   broker:
-    image: confluentinc/cp-kafka:latest #7.1.0
-    platform: linux/amd64
+    image: confluentinc/cp-kafka:7.1.1 #latest
+    platform: ${PLATFORM}
     hostname: broker
     container_name: broker
     depends_on:
@@ -38,8 +38,8 @@ services:
       KAFKA_DELETE_TOPIC_ENABLE: "true" 
 
   connect:
-    image: confluentinc/cp-kafka-connect-base:latest # 7.1.0
-    platform: linux/amd64
+    image: confluentinc/cp-kafka-connect-base:7.1.1 #latest
+    platform: ${PLATFORM}
     build:
       context: .
       dockerfile: Dockerfile-MongoConnect
@@ -74,8 +74,8 @@ services:
 
 
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:7.1.0
-    platform: linux/amd64
+    image: confluentinc/cp-kafka-rest:7.1.1 # latest #7.1.0
+    platform: ${PLATFORM}
     depends_on:
       - zookeeper
       - broker
@@ -92,10 +92,10 @@ services:
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:7.1.0
+    image: confluentinc/cp-schema-registry:7.1.1 # latest #7.1.0
     hostname: schema-registry
     container_name: schema-registry
-    platform: linux/amd64
+    platform: ${PLATFORM}
     depends_on:
       - broker
     networks:
@@ -109,8 +109,8 @@ services:
 
   # MongoDB Replica Set
   mongo1:
-    image: "mongo:4.4.13" # if using non-M1 mac, you can use 5.0.7
-    platform: linux/amd64
+    image: ${MDBVERSION}
+    platform: ${PLATFORM}
     container_name: mongo1
     command: --replSet rs0 --oplogSize 128
     volumes:
