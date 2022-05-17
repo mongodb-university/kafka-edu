@@ -36,24 +36,24 @@ catch {
 
 }
 
-Write-Host "Checking to see if MongoDB is running..."
+Write-Host "`r`nChecking to see if MongoDB is running..."
 
 CheckMongoDB
 
-Write-Host  "Starting docker ."
+Write-Host  "`r`nStarting docker ."
 
-docker-compose up -d --build
+$env:PLATFORM="linux/x86_64";$env:MDBVERSION="mongo:latest";docker-compose up -d --build;Write-Host "`r`nDocker variables:";Get-ChildItem Env:PLATFORM
 
-Write-Host  "Configuring the MongoDB ReplicaSet."
+Write-Host  "`r`nConfiguring the MongoDB ReplicaSet."
 
-docker-compose exec mongo1 /usr/bin/mongo --eval "rsconf = { _id : 'rs0', members: [ { _id : 0, host : 'mongo1:27017', priority: 1.0 }]}; rs.initiate(rsconf);"
+docker-compose exec mongo1 /usr/bin/mongosh --eval "rsconf = { _id : 'rs0', members: [ { _id : 0, host : 'mongo1:27017', priority: 1.0 }]}; rs.initiate(rsconf);"
 Write-Host  "
 
 ==============================================================================================================
 
 The following services are running:
 
-MongoDB 3-node cluster available on port 27017
+MongoDB on port 27017
 Kafka Broker on 9092
 Kafka Zookeeper on 2181
 Kafka Connect on 8083
