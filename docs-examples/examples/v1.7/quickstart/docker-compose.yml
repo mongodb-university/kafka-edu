@@ -35,6 +35,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-MongoConnect
+    ports:
+      - "35000:35000"
     hostname: connect
     container_name: connect
     depends_on:
@@ -43,6 +45,8 @@ services:
     networks:
       - localnet
     environment:
+      KAFKA_JMX_PORT: 35000
+      KAFKA_JMX_HOSTNAME: localhost
       CONNECT_BOOTSTRAP_SERVERS: "broker:29092"
       CONNECT_REST_ADVERTISED_HOST_NAME: connect
       CONNECT_REST_PORT: 8083
@@ -59,6 +63,9 @@ services:
       CONNECT_AUTO_CREATE_TOPICS_ENABLE: "true"
       CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+    command: 'bash -c ''if [ ! -d /usr/share/confluent-hub-components/confluentinc-kafka-connect-datagen ]; then echo "WARNING: Did not find directory for kafka-connect-datagen (did you remember to run: docker-compose up -d --build ?)"; fi ; /etc/confluent/docker/run'''
+    volumes:
+      - /Users/alek.binion/projects/mongo-kafka/build/confluent/kafka-connect-mongodb:/usr/share/confluent-hub-components/kafka-connect-mongodb
 
   mongo1:
     image: "quickstart-mongod:1.0"
