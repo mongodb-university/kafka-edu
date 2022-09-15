@@ -1,8 +1,7 @@
 version: '3.6'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.1.1 #latest
-    platform: ${PLATFORM}
+    image: confluentinc/cp-zookeeper:latest #7.1.1 #latest
     hostname: zookeeper
     container_name: zookeeper
     ports:
@@ -14,8 +13,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
 
   broker:
-    image: confluentinc/cp-kafka:7.1.1 #latest
-    platform: ${PLATFORM}
+    image: confluentinc/cp-kafka:latest
     hostname: broker
     container_name: broker
     depends_on:
@@ -28,9 +26,9 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      KAFKA_LISTENERS: LISTENER_1://broker:29092,LISTENER_2://broker:9092
+      KAFKA_LISTENERS: LISTENER_1://broker:29092,LISTENER_2://broker:9092,LISTENER_3://localhost:9092
       KAFKA_ADVERTISED_LISTENERS: LISTENER_1://broker:29092,LISTENER_2://localhost:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_1:PLAINTEXT,LISTENER_2:PLAINTEXT
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_1:PLAINTEXT,LISTENER_2:PLAINTEXT,LISTENER_3:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
@@ -38,8 +36,7 @@ services:
       KAFKA_DELETE_TOPIC_ENABLE: "true" 
 
   connect:
-    image: confluentinc/cp-kafka-connect-base:7.1.1 #latest
-    platform: ${PLATFORM}
+    image: confluentinc/cp-kafka-connect-base:latest
     build:
       context: .
       dockerfile: Dockerfile-MongoConnect
@@ -74,8 +71,7 @@ services:
 
 
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:7.1.1 # latest #7.1.0
-    platform: ${PLATFORM}
+    image: confluentinc/cp-kafka-rest:latest #7.1.1 # latest #7.1.0
     depends_on:
       - zookeeper
       - broker
@@ -90,12 +86,13 @@ services:
       KAFKA_REST_HOST_NAME: rest-proxy
       KAFKA_REST_BOOTSTRAP_SERVERS: 'broker:29092'
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
+      KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema_registry:8081'
+
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:7.1.1 # latest #7.1.0
+    image: confluentinc/cp-schema-registry:latest #7.1.1 # latest #7.1.0
     hostname: schema-registry
     container_name: schema-registry
-    platform: ${PLATFORM}
     depends_on:
       - broker
     networks:
@@ -105,12 +102,12 @@ services:
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
       SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
 
   # MongoDB Replica Set
   mongo1:
     image: ${MDBVERSION}
-    platform: ${PLATFORM}
     container_name: mongo1
     command: --replSet rs0 --oplogSize 128
     volumes:
