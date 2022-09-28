@@ -42,7 +42,7 @@ CheckMongoDB
 
 Write-Host  "`r`nStarting docker ."
 
-$env:PLATFORM="linux/x86_64";$env:MDBVERSION="mongo:latest";docker-compose up -d --build;Write-Host "`r`nDocker variables:";Get-ChildItem Env:PLATFORM
+$env:PLATFORM="linux/x86_64";$env:MDBVERSION="mongo:6.0.1";docker-compose up -d --build;Write-Host "`r`nDocker variables:";Get-ChildItem Env:PLATFORM
 
 Write-Host  "`r`nConfiguring the MongoDB ReplicaSet."
 
