@@ -31,7 +31,7 @@ services:
       KAFKA_DELETE_TOPIC_ENABLE: "true"
 
   connect:
-    image: quickstart-connect-1.4.0:1.0
+    image: quickstart-connect-1.8.0:1.0
     build:
       context: .
       dockerfile: Dockerfile-MongoConnect

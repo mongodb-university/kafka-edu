@@ -21,7 +21,7 @@ CONFLUENT_VERSION = "confluent_hub_version"
 # The following dictionary captures connector version information from this website:
 # https://www.confluent.io/hub/mongodb/kafka-connect-mongodb
 REPLACE_MAP = {
-    "v1.8": "1.8.0",
+    "v1.8":"1.8.0",
     "v1.7": "1.7.0",
     "v1.6": "1.6.1",
     "v1.5": "1.5.1",
