@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+    image: confluentinc/cp-zookeeper:7.2.1
     hostname: zookeeper
     container_name: zookeeper
     networks:
@@ -11,7 +11,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
 
   broker:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.2.1
     hostname: broker
     container_name: broker
     depends_on:
@@ -35,6 +35,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-MongoConnect
+    ports:
+      - "35000:35000"
     hostname: connect
     container_name: connect
     depends_on:
@@ -43,6 +45,8 @@ services:
     networks:
       - localnet
     environment:
+      KAFKA_JMX_PORT: 35000
+      KAFKA_JMX_HOSTNAME: localhost
       CONNECT_BOOTSTRAP_SERVERS: "broker:29092"
       CONNECT_REST_ADVERTISED_HOST_NAME: connect
       CONNECT_REST_PORT: 8083
@@ -74,6 +78,9 @@ services:
   mongo1-setup:
     image: "quickstart-mongod:1.0"
     container_name: mongo1-setup
+    build:
+      context: .
+      dockerfile: Dockerfile-Mongo
     depends_on:
       - mongo1
     networks:
@@ -82,7 +89,7 @@ services:
       [
         "bash",
         "-c",
-        "sleep 10 && mongo --host mongodb://mongo1:27017 config-replica.js && sleep 10 && mongo --host mongodb://mongo1:27017 config-data.js",
+        "sleep 10 && mongosh --host mongo1:27017 config-replica.js && sleep 10 && mongosh --host mongo1:27017 config-data.js",
       ]
     restart: "no"
 
