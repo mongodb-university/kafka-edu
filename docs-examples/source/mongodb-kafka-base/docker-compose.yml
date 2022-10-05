@@ -35,6 +35,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-MongoConnect
+    ports:
+      - "35000:35000"
     hostname: connect
     container_name: connect
     depends_on:
@@ -43,6 +45,8 @@ services:
     networks:
       - localnet
     environment:
+      KAFKA_JMX_PORT: 35000
+      KAFKA_JMX_HOSTNAME: localhost
       CONNECT_BOOTSTRAP_SERVERS: "broker:29092"
       CONNECT_REST_ADVERTISED_HOST_NAME: connect
       CONNECT_REST_PORT: 8083

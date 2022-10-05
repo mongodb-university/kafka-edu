@@ -3,7 +3,7 @@ FROM mongo:6.0.1
 COPY config-replica.js /
 COPY .bashrc /data/db/.bashrc
 COPY requirements.txt /
-COPY status.sh /
+RUN mkdir /scratch_space
 ADD change_streams /tutorials/change_streams
 ADD source_connector /tutorials/source_connector
 ADD sink_connector /tutorials/sink_connector
