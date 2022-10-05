@@ -20,56 +20,31 @@ The docker compose in this repository will create an environment that consists o
 - Apache Kafka Connect
 - MongoDB Connector for Apache Kafka (installed in Kafka Connect)
 - MongoDB single node replica set
- 
-  
 
 # Starting the Docker environment
 
-  
+To start the baseline tutorial environment execute the run the following command:
 
-To start the baseline tutorial environment execute the shell script `run.sh`.
+```
+docker-compose -p mongo-kafka up -d
+```
 
-```sh run.sh```
+To start an interactive shell, run the following command:
 
-  
-
-> Note: If you are using a Windows OS, execute the `run.ps1` script a Powershell environment.
-  
-
-Once the environment is running, you can use locally installed tools like MongoSH if you have them installed or use the  MongoDB Kafka Tutorial image.  This image contains tools like MongoSH, KafkaCat and other utilities.
- 
-
-```docker run --rm --name shell1 --network kafka-edu_localnet -it mongokafkatutorial:latest bash```
-
+```
+docker exec -it mongo1 /bin/bash
+```
 
 ## Shutting down the Tutorial environment
 
-  
+To stop and remove the Docker environment from your
+machine, run the following command:
 
-The Docker environment can be stopped using
-
-`docker-compose down`
-
-  
-
-If you would like to drop the MongoDB databases as well as shutdown use
-
-`docker-compose down -v`
-
-  
-
-To start the environment again just execute the `run.sh` shell script
-
-`sh run.sh`
-
-> Note: If you are using a Windows OS, execute the `run.ps1` script a Powershell environment.
-
-  
-  
+```
+docker-compose -p mongo-kafka down --rmi 'all'
+```
 
 ## References
-
-  
 
 - [MongoDB Kafka Connector](https://docs.mongodb.com/kafka-connector/current/) online documentation.
 
