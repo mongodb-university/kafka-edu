@@ -34,7 +34,7 @@ services:
     image: confluentinc/cp-kafka-connect-base:7.2.2
     build:
       context: .
-      dockerfile: Dockerfile-MongoConnect
+      dockerfile: connect.Dockerfile
     ports:
       - "35000:35000"
     hostname: connect
@@ -101,7 +101,7 @@ services:
     container_name: mongo1
     build:
       context: .
-      dockerfile: Dockerfile-mongo
+      dockerfile: mongo.Dockerfile
     command: --replSet rs0 --oplogSize 128
     depends_on:
       - zookeeper
@@ -116,7 +116,7 @@ services:
     container_name: mongo1-setup
     build:
       context: .
-      dockerfile: Dockerfile-mongo
+      dockerfile: mongo.Dockerfile
     depends_on:
       - mongo1
     networks:
