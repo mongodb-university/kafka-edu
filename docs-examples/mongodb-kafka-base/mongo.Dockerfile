@@ -29,5 +29,6 @@ RUN git clone https://github.com/RWaltersMA/stockgenmongo.git
 
 
 RUN dos2unix /usr/local/bin/*
+RUN dos2unix /data/db/.bashrc
 RUN pip3 install -r /requirements.txt
 RUN pip3 install -r /stockgenmongo/requirements.txt
