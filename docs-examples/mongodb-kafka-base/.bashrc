@@ -1,2 +1,2 @@
-PS1="MongoDB Kafka Connector Sandbox $ "
+PS1="MongoDB Kafka Sandbox \$"
 cd /scratch_space
