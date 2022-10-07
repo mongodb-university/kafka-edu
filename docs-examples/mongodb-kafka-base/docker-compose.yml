@@ -99,6 +99,8 @@ services:
   mongo1:
     image: "mongodb-kafka-base-mongod:1.0"
     container_name: mongo1
+    ports:
+      - "35001:27017"
     build:
       context: .
       dockerfile: mongo.Dockerfile
