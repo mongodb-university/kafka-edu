@@ -1,7 +1,7 @@
 version: "3.6"
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.2.2
+    image: confluentinc/cp-zookeeper:7.3.1
     hostname: zookeeper
     container_name: zookeeper
     networks:
@@ -11,7 +11,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
 
   broker:
-    image: confluentinc/cp-kafka:7.2.2
+    image: confluentinc/cp-kafka:7.3.1
     hostname: broker
     container_name: broker
     depends_on:
@@ -31,7 +31,7 @@ services:
       KAFKA_DELETE_TOPIC_ENABLE: "true"
 
   connect:
-    image: confluentinc/cp-kafka-connect-base:7.2.2
+    image: cp-kafka-connect-mongodb:1.8.1
     build:
       context: .
       dockerfile: connect.Dockerfile
@@ -67,7 +67,7 @@ services:
       CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
 
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:7.2.2
+    image: confluentinc/cp-kafka-rest:7.3.1
     depends_on:
       - zookeeper
       - broker
@@ -83,7 +83,7 @@ services:
       KAFKA_REST_SCHEMA_REGISTRY_URL: "http://schema_registry:8081"
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:7.2.2
+    image: confluentinc/cp-schema-registry:7.3.1
     hostname: schema-registry
     container_name: schema-registry
     depends_on:
@@ -114,7 +114,7 @@ services:
     restart: always
 
   mongo1-setup:
-    image: "mongodb-kafka-base-setup-mongod:1.0"
+    image: "mongodb-kafka-base-mongod:1.0"
     container_name: mongo1-setup
     build:
       context: .
