@@ -31,7 +31,6 @@ services:
       KAFKA_DELETE_TOPIC_ENABLE: "true"
 
   connect:
-    image: confluentinc/cp-kafka-connect-base:7.2.2
     build:
       context: .
       dockerfile: connect.Dockerfile
