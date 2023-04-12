@@ -26,7 +26,7 @@ The docker compose in this repository will create an environment that consists o
 To start the baseline tutorial environment execute the run the following command:
 
 ```
-docker-compose -p mongo-kafka up -d
+docker-compose -p mongo-kafka up -d --force-recreate
 ```
 
 To start an interactive shell, run the following command:
