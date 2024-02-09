@@ -16,7 +16,7 @@
 
 val projectArchiveBaseName = "UpsertAsPartOfDocumentStrategy" // Set the outputted JAR base name
 val mongoKafkaConnectVersion = "<kafka version>" // Set the Kafka connector version to test
-val mongoDriverVersion = "[4.3,4.3.99)"
+val mongoDriverVersion = "4.11.0"
 val kafkaConnectApiVersion = "2.6.0"
 
 buildscript {
