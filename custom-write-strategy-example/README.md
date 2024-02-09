@@ -8,11 +8,14 @@ Then copy the `./build/libs/UpsertAsPartOfDocumentStrategy.jar`
 
 ## Customization
 
-The build file (`build.gradle.kts`) has a number of variables that can be changed to help customize the build.
+The build file (`build.gradle.kts`) has a number of variables that can
+be changed to help customize the build. Set the value of the
+`mongoKafkaConnectVersion` variable to the Kafka connector version you
+want to test your write model strategy with.
 
 ```kts
-val projectArchiveBaseName = "UpsertAsPartOfDocumentStrategy" // Set the outputted jar base name
-val mongoKafkaConnectVersion = "1.6.1" // Set the mongo kafka connect version
+val projectArchiveBaseName = "UpsertAsPartOfDocumentStrategy" // Set the outputted JAR base name
+val mongoKafkaConnectVersion = "<kafka version>" // Set the Kafka connector version to test
 val mongoDriverVersion = "[4.3,4.3.99)"
 val kafkaConnectApiVersion = "2.6.0"
 ```

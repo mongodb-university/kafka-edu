@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-val projectArchiveBaseName = "UpsertAsPartOfDocumentStrategy" // Set the outputted jar base name
-val mongoKafkaConnectVersion = "1.6.1" // Set the mongo kafka connect version
+val projectArchiveBaseName = "UpsertAsPartOfDocumentStrategy" // Set the outputted JAR base name
+val mongoKafkaConnectVersion = "<kafka version>" // Set the Kafka connector version to test
 val mongoDriverVersion = "[4.3,4.3.99)"
 val kafkaConnectApiVersion = "2.6.0"
 
